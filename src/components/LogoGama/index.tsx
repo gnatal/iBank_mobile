@@ -1,5 +1,5 @@
 import React from "react";
-import {ContainerLogo, LogoGama} from "./styles";
+import { ContainerLogo, LogoGama } from "./styles";
 
 interface ContainerLogoProps {
     mTop?: string,
@@ -9,11 +9,11 @@ interface ContainerLogoProps {
 const ContainerLogoGama: React.FC<ContainerLogoProps> = ({
     mTop,
     mBottom
-    }) => {
+}) => {
 
     return (
         <ContainerLogo _mTop={mTop} _mBottom={mBottom}>
-            <LogoGama source={require('../../assets/logo-gama-academy.png')}/>
+            <LogoGama source={require('../../assets/logo-gama-academy.png')} />
         </ContainerLogo>
     );
 };

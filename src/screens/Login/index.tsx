@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 import { FormHandles } from '@unform/core';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from 'react-redux';
-//
 import ButtonPrimary from '../../components/ButtonPrimary';
 import { LinksBottom, LoginForm } from './styles';
 import WhiteCardLoginRegister from '../../components/WhiteCardLoginRegister';
@@ -114,62 +113,62 @@ export default function Login() {
             keyboardVerticalOffset={10}
         >
             <ContainerScroll>
-                <SafeAreaView/>
-                    <ContainerLogoGama mTop="50px" mBottom="20px" />
-                    <ContainerViewLoginRegister>
-                        <WhiteCardLoginRegister title="Seja bem vindo, informe seus dados para logar.">
-                            <LoginForm ref={formRef} onSubmit={loginSysGama}>
-                                <Input
-                                    name="login"
-                                    placeholder="Digite seu usuário"
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                    returnKeyType="next"
-                                    onSubmitEditing={() => {
-                                        passwordInputRef.current?.focus();
-                                    }}
+                <SafeAreaView />
+                <ContainerLogoGama mTop="50px" mBottom="20px" />
+                <ContainerViewLoginRegister>
+                    <WhiteCardLoginRegister title="Seja bem vindo, informe seus dados para logar.">
+                        <LoginForm ref={formRef} onSubmit={loginSysGama}>
+                            <Input
+                                name="login"
+                                placeholder="Digite seu usuário"
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                returnKeyType="next"
+                                onSubmitEditing={() => {
+                                    passwordInputRef.current?.focus();
+                                }}
+                            />
+                            <Input
+                                ref={passwordInputRef}
+                                name="passwd"
+                                placeholder="Digite sua Senha"
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                secureTextEntry
+                                returnKeyType="send"
+                                onSubmitEditing={submitFormButton}
+                            />
+                            <ButtonPrimary
+                                title="Continuar"
+                                iconName="arrow-right"
+                                iconColor="#fff"
+                                iconSize={25}
+                                marginTop="20px"
+                                marginBottom="30px"
+                                bgColor="#63dc3f"
+                                color="#fff"
+                                onPress={submitFormButton}
+                                _loading={loading}
+                            />
+                            <LinksBottom onPress={navForgetPassword}>
+                                Esqueci minha senha{' '}
+                                <Feather
+                                    name="chevron-right"
+                                    size={13}
+                                    color="#8C52E5"
                                 />
-                                <Input
-                                    ref={passwordInputRef}
-                                    name="passwd"
-                                    placeholder="Digite sua Senha"
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                    secureTextEntry
-                                    returnKeyType="send"
-                                    onSubmitEditing={submitFormButton}
+                            </LinksBottom>
+                            <LinksBottom onPress={navCreateAccount}>
+                                Ainda não sou cliente{' '}
+                                <Feather
+                                    name="chevron-right"
+                                    size={13}
+                                    color="#8C52E5"
                                 />
-                                <ButtonPrimary
-                                    title="Continuar"
-                                    iconName="arrow-right"
-                                    iconColor="#fff"
-                                    iconSize={25}
-                                    marginTop="20px"
-                                    marginBottom="30px"
-                                    bgColor="#63dc3f"
-                                    color="#fff"
-                                    onPress={submitFormButton}
-                                    _loading={loading}
-                                />
-                                <LinksBottom onPress={navForgetPassword}>
-                                    Esqueci minha senha{' '}
-                                    <Feather
-                                        name="chevron-right"
-                                        size={13}
-                                        color="#8C52E5"
-                                    />
-                                </LinksBottom>
-                                <LinksBottom onPress={navCreateAccount}>
-                                    Ainda não sou cliente{' '}
-                                    <Feather
-                                        name="chevron-right"
-                                        size={13}
-                                        color="#8C52E5"
-                                    />
-                                </LinksBottom>
-                            </LoginForm>
-                        </WhiteCardLoginRegister>
-                    </ContainerViewLoginRegister>
+                            </LinksBottom>
+                        </LoginForm>
+                    </WhiteCardLoginRegister>
+                </ContainerViewLoginRegister>
             </ContainerScroll>
         </KeyboardAvoidingView>
     );
