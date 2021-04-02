@@ -38,3 +38,10 @@ export const TextInput = styled.TextInput`
     width: 100%;
     padding-bottom: 5px;
 `;
+
+export const Error = styled.Text`
+    color: #e6505c;
+    font-size: 17px;
+    width: 100%;
+    padding-bottom: 5px;
+`;

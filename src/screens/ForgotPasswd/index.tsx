@@ -1,13 +1,13 @@
-import React, {useRef, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
-import {KeyboardAvoidingView, Platform, TextInput} from 'react-native';
+import React, { useRef, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { KeyboardAvoidingView, Platform, TextInput } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
-import {Form} from '@unform/mobile';
+import { Form } from '@unform/mobile';
 import * as Yup from 'yup';
-import {FormHandles} from '@unform/core';
+import { FormHandles } from '@unform/core';
 //
 import ButtonPrimary from '../../components/ButtonPrimary';
-import {LinksBottom} from './styles';
+import { LinksBottom } from './styles';
 import WhiteCardLoginRegister from '../../components/WhiteCardLoginRegister';
 import ContainerViewLoginRegister from '../../components/ContainerViewLoginRegister';
 import ContainerScroll from '../../components/ContainerScrollView';
@@ -28,10 +28,12 @@ export default function ForgotPasswd() {
     const loginInputRef = useRef<TextInput>(null);
 
     function navLogin() {
+        navigation.navigate('Login');
         // redirecionar para screen de login
     }
 
     function navCreateAccount() {
+        navigation.navigate('CreateAccount');
         // redirecionar para screen de criar conta
     }
 
@@ -39,7 +41,7 @@ export default function ForgotPasswd() {
         formRef.current?.submitForm();
     };
 
-    async function generateTmpPasswd({email, login}: IForgotPasswdForm) {
+    async function generateTmpPasswd({ email, login }: IForgotPasswdForm) {
         try {
             // Start by cleaning errors
             formRef.current?.setErrors({});
@@ -47,12 +49,12 @@ export default function ForgotPasswd() {
             const schema = Yup.object({
                 email: Yup.string()
                     .trim()
-                    .email()
+                    .email('Insira um e-mail válido')
                     .required('Email obrigatório.'),
                 login: Yup.string().trim().required('Login obrigatório'),
             });
 
-            await schema.validate({email, login}, {abortEarly: false});
+            await schema.validate({ email, login }, { abortEarly: false });
 
             setLoading(true);
 
@@ -61,7 +63,7 @@ export default function ForgotPasswd() {
                 login,
             };
 
-            const {data: senhaTemporaria} = await api.post(
+            const { data: senhaTemporaria } = await api.post(
                 'nova-senha',
                 postData
             );
@@ -71,6 +73,7 @@ export default function ForgotPasswd() {
             });
         } catch (err) {
             setLoading(false);
+            // console.log(JSON.stringify(err));
             if (err instanceof Yup.ValidationError) {
                 const errors = getValidationErrors(err);
                 // This is the way to set errors with unform. Each key is the input name and
@@ -83,17 +86,17 @@ export default function ForgotPasswd() {
     }
 
     return (
-        <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'center',}}
-                              behavior={Platform.OS === "ios" ? "padding" : "height"} enabled
-                              keyboardVerticalOffset={10}>
+        <KeyboardAvoidingView style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', }}
+            behavior={Platform.OS === "ios" ? "padding" : "height"} enabled
+            keyboardVerticalOffset={10}>
             <ContainerScroll>
-                <ContainerLogoGama mTop="50px" mBottom="20px"/>
+                <ContainerLogoGama mTop="50px" mBottom="20px" />
                 <ContainerViewLoginRegister>
                     <WhiteCardLoginRegister title="Redefinir senha">
                         <Form
                             ref={formRef}
                             onSubmit={generateTmpPasswd}
-                            style={{width: '100%'}}
+                            style={{ width: '100%' }}
                         >
                             <Input
                                 name="email"
