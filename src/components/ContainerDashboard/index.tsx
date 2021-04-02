@@ -1,7 +1,7 @@
 import React from "react";
-import {ContainerView} from "./style";
+import { ContainerView } from "./style";
 
-const ContainerViewDashboard: React.FC = ({children}) => {
+const ContainerViewDashboard: React.FC = ({ children }) => {
     return (
         <ContainerView>
             {children}

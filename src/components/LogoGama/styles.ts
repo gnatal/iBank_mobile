@@ -1,5 +1,5 @@
-import styled from "styled-components/native";
-import {Dimensions} from "react-native";
+import styled from 'styled-components/native';
+import { Dimensions } from 'react-native';
 
 interface LogoProps {
     _mTop?: string;
@@ -7,15 +7,16 @@ interface LogoProps {
 }
 
 export const ContainerLogo = styled.View<LogoProps>`
-  width: ${Dimensions.get("window").width}px;
-  margin-top: ${(props) => props._mTop || "0px"};
-  margin-bottom: ${(props) => props._mBottom || "0px"};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
+    width: ${Dimensions.get('window').width}px;
+    margin-top: ${(props) => props._mTop || '0px'};
+    margin-bottom: ${(props) => props._mBottom || '0px'};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
 
 export const LogoGama = styled.Image`
-  width: 100%;
-  max-width: 249px;
+    width: 100%;
+    height: 90px;
+    max-width: 249px;
 `;
