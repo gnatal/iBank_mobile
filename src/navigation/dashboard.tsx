@@ -6,7 +6,7 @@ import Deposit from '../screens/Deposit';
 import Plans from '../screens/Plans';
 import DrawerNavigator from './drawer';
 import { Platform } from 'react-native';
-import { Ionicons, FontAwesome, MaterialCommunityIcons  } from '@expo/vector-icons';
+import { Ionicons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -67,10 +67,10 @@ export default function DashboardTabNavigator() {
                 },
             }}
         >
-            <Screen name="Home" component={DrawerNavigator} options={{title: 'Início'}} />
-            <Screen name="Transfers" component={Transfers} options={{title: 'Transferências'}} />
-            <Screen name="Deposit" component={Deposit} options={{title: 'Depósitos'}} />
-            <Screen name="Plans" component={Plans} options={{title: 'Planos'}} />
+            <Screen name="Home" component={DrawerNavigator} options={{ title: 'Início' }} />
+            <Screen name="Transfers" component={Transfers} options={{ title: 'Transferências' }} />
+            <Screen name="Deposit" component={Deposit} options={{ title: 'Depósitos' }} />
+            <Screen name="Plans" component={Plans} options={{ title: 'Planos' }} />
         </Navigator>
     );
 }

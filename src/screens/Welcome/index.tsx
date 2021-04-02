@@ -4,9 +4,9 @@ import { useDispatch } from 'react-redux';
 import AppLoading from 'expo-app-loading';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 //
-// import Navigation from '../../navigation';
-// import { isAuth } from '../../services/auth';
-// import { logInUser } from '../../store/modules/user/actions';
+import Navigation from '../../navigation';
+import { isAuth } from '../../services/auth';
+import { logInUser } from '../../store/modules/user/actions';
 
 export default function Welcome() {
     const [loading, setLoading] = useState(true);
