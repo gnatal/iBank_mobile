@@ -14,7 +14,7 @@ export default function Plans() {
     const transactionTypesKeys = transactionTypes && Object.keys(transactionTypes);
 
     return (
-        <ContainerScroll>
+        <ContainerScroll  _bgColor="#c4c5c7">
             <ContainerViewDashboard>
                 <WhiteCardDashboard _MarginBottom="120px" _Padding="20px 20px 40px">
                     <S.HeaderCard>
