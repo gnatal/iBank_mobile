@@ -7,6 +7,7 @@ import {
     TextConfirmation,
     ImageConfirmation,
     Container,
+    ImageBackground
 } from './styles';
 import ButtonPrimary from '../../components/ButtonPrimary';
 
@@ -23,7 +24,7 @@ export default function ConfirmAccountCreate() {
     }, [navigation]);
 
     function navLogin() {
-        // redirecionar para screen de login
+        navigation.navigate('Login');
     }
 
     return (
@@ -31,9 +32,12 @@ export default function ConfirmAccountCreate() {
             <Container>
                 <ContainerLogoGama mTop="60px" />
                 <ContainerConfirmation>
-                    <ImageConfirmation
-                        source={require('../../assets/ok-create-account.png')}
-                    />
+                    <ImageBackground>
+
+                        <ImageConfirmation
+                            source={require('../../assets/ok-create-account.png')}
+                        />
+                    </ImageBackground>
                     <TextConfirmation>
                         Conta criada com sucesso!
                     </TextConfirmation>
@@ -42,6 +46,7 @@ export default function ConfirmAccountCreate() {
                         iconName="arrow-right"
                         iconColor="#fff"
                         iconSize={25}
+                        style={{ width: "80%" }}
                         marginTop="20px"
                         marginBottom="30px"
                         bgColor="#63dc3f"
