@@ -39,6 +39,8 @@
 
 Link para nosso notion - [clique aqui](https://www.notion.so/81e3ac29968247029a2c45fe4e3f92af?v=8ddfbc8e11ff4db2a9b41e46c2818c9b).
 
+Link para nossa documentação - [clique aqui](https://docs.google.com/document/d/1PbObK6qR1NcTQ4brhCIOCplhG2xnZSB4RCopouBae1o/edit?usp=sharing)
+
 <h2>
     ##  Como rodar esse projeto. ##
 </h2>
