@@ -8,6 +8,16 @@ export const storeData = async (key: string, value: string) => {
     console.log('Error: ', err);
   }
 };
+export const getData = async (key: string) => {
+  try {
+    const value = await AsyncStorage.getItem(key);
+    if (value !== null) {
+      return value;
+    }
+  } catch (e) {
+    console.log('Error:', e);
+  }
+};
 
 export const brlMask = (value: string): string => {
   let cleanValue = value.replace(/\D/g, '');

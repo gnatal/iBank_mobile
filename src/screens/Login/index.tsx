@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { KeyboardAvoidingView, Platform, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { FormHandles } from '@unform/core';
@@ -22,7 +22,7 @@ import ContainerScroll from '../../components/ContainerScrollView';
 import { Checkbox } from '../../components/Checkbox';
 
 import { LinksBottom, LoginForm } from './styles';
-import { storeData } from '../../utils/helpers';
+import { getData, storeData } from '../../utils/helpers';
 
 interface ILoginForm {
   login: string;
@@ -32,41 +32,58 @@ interface ILoginForm {
 export default function Login() {
   const [loading, setLoading] = useState(false);
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
+  const [usernameInput, setUsernameInput] = useState('')
+  const [passInput, setPassInput] = useState('')
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
 
-  const loginSysGama = async (data: ILoginForm) => {
+  useEffect(() => {
+    const getStoredData = async () => {
+      const rememberMe = await getData('@remember-me');
+      if (!rememberMe) return false;
+      setToggleCheckBox(true);
+      const values = await AsyncStorage.multiGet(['@user', '@pass']);
+      const user = values[0][1];
+      const pass = values[1][1];
+      if (user)
+        setUsernameInput(user);
+      if (pass)
+        setPassInput(pass)
+    }
+    
+    getStoredData();
+  },[]);
+
+  const handleSubmit = async (data: ILoginForm) => { 
+    data.login = usernameInput;
+    data.passwd = passInput;
     const { login, passwd } = data;
 
     try {
       // Start by cleaning errors
       formRef.current?.setErrors({});
-
+      
       const schema = Yup.object({
-          login: Yup.string().trim().min(5).required('Cpf obrigatório.'),
-          passwd: Yup.string().trim().required('Campo obrigatório'),
+        login: Yup.string().trim().min(5).required('Campo obrigatório.'),
+        passwd: Yup.string().trim().required('Campo obrigatório'),
       });
-
+      
       await schema.validate(data, { abortEarly: false });
-
+      
       setLoading(true);
 
       const postData = {
         usuario: login,
         senha: passwd,
       };
-
+      const passToStore = ['@pass', passwd];
+      const userToStore = ['@user', login];
       api.defaults.headers.Authorization = null;
 
       await api.post(`login`, postData).then(async ({ data }) => {
-        await Promise.all([
-          storeData('@user', postData.usuario),
-          storeData('@pass', postData.senha)
-        ]);
-
         await AsyncStorage.multiRemove([
           '@tokenApp',
           '@loginApp',
@@ -81,7 +98,8 @@ export default function Login() {
           data.usuario.nome.split(' ')[0],
         ];
         
-        await AsyncStorage.multiSet([token, login, userName, cpf]);
+
+        await AsyncStorage.multiSet([token, login, cpf, userName, passToStore, userToStore]);
         api.defaults.headers.Authorization = data.token;
         dispatch(
           logInUser({
@@ -115,6 +133,12 @@ export default function Login() {
     formRef.current?.submitForm();
   };
 
+  const handleCheckboxChange = async (value: boolean) => {
+    setToggleCheckBox(value);
+    if (value) await storeData('@remember-me', 'on');
+    else await AsyncStorage.removeItem('@remember-me');
+  }
+
   return (
     <KeyboardAvoidingView
       style={{
@@ -131,13 +155,15 @@ export default function Login() {
       <ContainerLogoGama mTop="50px" mBottom="20px" />
         <ContainerViewLoginRegister>
           <WhiteCardLoginRegister title="Seja bem vindo, informe seus dados para logar.">
-            <LoginForm ref={formRef} onSubmit={loginSysGama}>
+            <LoginForm ref={formRef} onSubmit={handleSubmit}>
               <Input
                 name="login"
                 placeholder="Digite seu usuário"
                 autoCapitalize="none"
                 autoCorrect={false}
                 returnKeyType="next"
+                value={usernameInput}
+                onChangeText={(value) => setUsernameInput(value)}
                 onSubmitEditing={() => {passwordInputRef.current?.focus()}}
               />
               <Input
@@ -148,11 +174,15 @@ export default function Login() {
                 autoCorrect={false}
                 secureTextEntry
                 returnKeyType="send"
+                value={passInput}
+                onChangeText={(value) => setPassInput(value)}
                 onSubmitEditing={submitFormButton}
               />
 
               <Checkbox
                 text={'Lembrar usuário'}
+                value={toggleCheckBox}
+                onCheckboxChange={handleCheckboxChange}
               />
 
               <ButtonPrimary

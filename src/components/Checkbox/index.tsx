@@ -4,17 +4,18 @@ import { View, Text, StyleSheet } from 'react-native'
 
 interface CheckBoxProps {
   text: string;
+  value: boolean;
+  onCheckboxChange: (value: boolean) => void;
 }
 
-export const Checkbox: React.FC<CheckBoxProps> = ({ text }) => {
-  const [toggleCheckBox, setToggleCheckBox] = useState(false);
-  
+export const Checkbox: React.FC<CheckBoxProps> = ({ text, value, onCheckboxChange }) => {
+ 
   return (
     <View style={styles.Container}>
       <CheckBox
         disabled={false}
-        value={toggleCheckBox}
-        onValueChange={(newValue) => setToggleCheckBox(newValue)}
+        value={value}
+        onValueChange={(newValue) => onCheckboxChange(newValue)}
         tintColor={'#50c878'}
         tintColors={{ 
           true: '#50c878', 
