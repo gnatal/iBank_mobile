@@ -28,11 +28,11 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 ) => {
 
     const {
-        registerField,
-        defaultValue,
-        fieldName,
-        error,
-        clearError,
+      registerField,
+      defaultValue,
+      fieldName,
+      error,
+      clearError,
     } = useField(name);
     const inputElRef = useRef<any>(null);
     const inputValueRef = useRef<InputValueRef>({ value: defaultValue });
@@ -47,41 +47,41 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
     }, []);
 
     useImperativeHandle(ref, () => ({
-        focus() {
-            inputElRef.current.focus();
-        },
+      focus() {
+        inputElRef.current.focus();
+      },
     }));
 
     const handleFocus = () => {
-        clearError();
-        setFocused(true);
-    };
+      clearError();
+      setFocused(true);
+  };
 
     const handleBlur = () => {
-        setFocused(false);
+      setFocused(false);
     };
 
-    return (
-        <S.Container isErrored={!!error}>
-            <S.Icon
-                name={icon}
-                size={20}
-                color={isFocused ? '#025aa2' : '#999'}
-            />
+  return (
+    <S.Container isErrored={!!error}>
+      <S.Icon
+        name={icon}
+        size={20}
+        color={isFocused ? '#025aa2' : '#999'}
+      />
 
-            <S.TextInput
-                ref={inputElRef}
-                placeholderTextColor="#999"
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                defaultValue={defaultValue}
-                onChangeText={(value) => {
-                    inputValueRef.current.value = value;
-                }}
-                {...rest}
-            />
-        </S.Container>
-    );
+      <S.TextInput
+        ref={inputElRef}
+        placeholderTextColor="#999"
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        defaultValue={defaultValue}
+        onChangeText={(value) => {
+            inputValueRef.current.value = value;
+        }}
+        {...rest}
+      />
+    </S.Container>
+  );
 };
 
 export default forwardRef(Input);
