@@ -59,10 +59,7 @@ export default function Deposit() {
 
     const navDashboard = () => {
         setLoading(false);
-        // Toast.showSuccess('dsada');
-        navigation.navigate('Home');
-        //  setar loading como falso
-        //  redirecionar para screen da home
+        navigation.navigate('Home')
     };
 
     const submitFormButton = () => {
@@ -79,8 +76,8 @@ export default function Deposit() {
                 descricao: Yup.string()
                     .trim()
                     .required('Campo obrigatório')
-                    .min(2)
-                    .max(10),
+                    .min(2, 'Mínimo 2 caracteres')
+                    .max(10, 'Máximo 10 caracteres'),
                 valor: Yup.number()
                     .max(9999.99, 'Valor máximo de R$ 9.999,99')
                     .required('Campo obrigatório'),
@@ -96,15 +93,6 @@ export default function Deposit() {
             setLoading(true);
 
             const planoConta = transactionTypes!['R'][0];
-
-            // id: string;
-            // conta: number;
-            // contaDestino?: string;
-            // data: string;
-            // descricao: string;
-            // login: string;
-            // planoConta: IPlanoConta;
-            // valor: number;
 
             const postData = {
                 conta: debitAccount!.id,
@@ -128,7 +116,7 @@ export default function Deposit() {
                     planoConta,
                 })
             );
-            
+
             navDashboard();
         } catch (err) {
             setLoading(false);
@@ -143,11 +131,11 @@ export default function Deposit() {
     return (
         <KeyboardAvoidingView style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start' }}
             behavior={Platform.OS === "ios" ? "padding" : "height"} enabled keyboardVerticalOffset={20}>
-            <ContainerScroll _bgColor="#e6e6e6">
+            <ContainerScroll _bgColor="#50c878">
                 <S.HeaderDashboard>
                     <S.TextHeaderDashboard>Olá, {user?.userName}</S.TextHeaderDashboard>
                     <S.CloseButton onPress={() => navigation.goBack()}>
-                        <Feather name="x" size={33} color="#8C52E5" />
+                        <Feather name="x" size={33} color="#fff" />
                     </S.CloseButton>
                 </S.HeaderDashboard>
 
@@ -205,6 +193,7 @@ export default function Deposit() {
                             <DateTimePickerModal
                                 isVisible={isDatePickerVisible}
                                 mode="date"
+                                minimumDate={new Date()}
                                 onConfirm={handleConfirm}
                                 onCancel={hideDatePicker}
                             />
