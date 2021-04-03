@@ -131,7 +131,7 @@ export default function Deposit() {
     return (
         <KeyboardAvoidingView style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start' }}
             behavior={Platform.OS === "ios" ? "padding" : "height"} enabled keyboardVerticalOffset={20}>
-            <ContainerScroll _bgColor="#50c878">
+            <ContainerScroll _bgColor="#c4c5c7">
                 <S.HeaderDashboard>
                     <S.TextHeaderDashboard>Olá, {user?.userName}</S.TextHeaderDashboard>
                     <S.CloseButton onPress={() => navigation.goBack()}>
@@ -206,7 +206,7 @@ export default function Deposit() {
                                 onPress={submitFormButton}
                                 marginTop="20px"
                                 marginBottom="30px"
-                                bgColor="#63dc3f"
+                                bgColor="#50c878"
                                 color="#fff"
                                 _loading={loading}
                             />
