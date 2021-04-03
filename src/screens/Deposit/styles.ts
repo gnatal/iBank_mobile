@@ -20,7 +20,7 @@ export const TextHeaderCard = styled.Text`
     font-size: 18px;
     font-weight: 700;
     text-align: left;
-    color: #9b9b9b;
+    color: #50c878;
     padding-left: 10px;
 `;
 

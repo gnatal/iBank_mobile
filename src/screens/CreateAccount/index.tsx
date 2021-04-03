@@ -158,7 +158,7 @@ export default function CreateAccount() {
                                 iconSize={25}
                                 marginTop="20px"
                                 marginBottom="30px"
-                                bgColor="#63dc3f"
+                                bgColor="#50c878"
                                 color="#fff"
                                 onPress={submitFormButton}
                                 _loading={loading}

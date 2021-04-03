@@ -121,7 +121,7 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
     const toggleHideInfo = () => dispatch(toggleTransactionVisibility());
 
     return (
-        <ContainerScroll>
+        <ContainerScroll  _bgColor="#c4c5c7">
             <ContainerViewDashboard>
                 <S.HeaderDashboard>
                     <S.TextHeaderDashboard>
@@ -132,7 +132,7 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
                             <Ionicons
                                 name="ios-eye-outline"
                                 size={33}
-                                color="#FFFFFF"
+                                color="#50c878"
                             />
                         </S.IconEye>
                         <S.IconHeaderDashboard
@@ -141,7 +141,7 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
                             <Ionicons
                                 name="md-person-outline"
                                 size={33}
-                                color="#FFFFFF"
+                                color="#50c878"
                             />
                         </S.IconHeaderDashboard>
                     </S.ContainerIcon>
