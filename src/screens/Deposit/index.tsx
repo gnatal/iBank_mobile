@@ -20,6 +20,7 @@ import getValidationErrors from '../../utils/getValidationErrors';
 import { IRootState } from '../../store';
 import InputMasked from '../../components/InputMasked';
 import { Feather } from "@expo/vector-icons";
+import Toast from 'react-native-tiny-toast';
 
 interface IDepositForm {
     descricao: string;
@@ -58,7 +59,8 @@ export default function Deposit() {
 
     const navDashboard = () => {
         setLoading(false);
-        navigation.navigate('Home')
+        // Toast.showSuccess('dsada');
+        navigation.navigate('Home');
         //  setar loading como falso
         //  redirecionar para screen da home
     };
@@ -126,7 +128,7 @@ export default function Deposit() {
                     planoConta,
                 })
             );
-
+            
             navDashboard();
         } catch (err) {
             setLoading(false);

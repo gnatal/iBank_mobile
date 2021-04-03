@@ -6,16 +6,16 @@ import user from './modules/user/reducers';
 import { IUserState } from './modules/user/types';
 
 const composeEnhancers =
-    (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export interface IRootState {
-    user: IUserState;
-    accounts: IDashboardState;
+  user: IUserState;
+  accounts: IDashboardState;
 }
 
 const store = createStore<IRootState, IAction, unknown, unknown>(
-    combineReducers({ user, accounts }),
-    composeEnhancers()
+  combineReducers({ user, accounts }),
+  composeEnhancers()
 );
 
 export default store;
