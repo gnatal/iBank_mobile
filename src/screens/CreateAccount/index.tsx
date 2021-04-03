@@ -52,9 +52,9 @@ export default function CreateAccount() {
             formRef.current?.setErrors({});
             const schema = Yup.object({
                 cpf: Yup.string().min(14).trim().required('Cpf obrigatório.'),
-                name: Yup.string().min(5).trim().required('Campo obrigatório'),
+                name: Yup.string().min(5, "Mínimo 5 caracteres").trim().required('Campo obrigatório'),
                 fullName: Yup.string().trim().required('Campo obrigatório'),
-                passwd: Yup.string().trim().required('Senha obrigatória'),
+                passwd: Yup.string().min(6, 'Mínimo 6 caracteres').trim().required('Senha obrigatória'),
                 confirmPasswd: Yup.string()
                     .trim()
                     .oneOf([Yup.ref('passwd'), null], 'Senhas diferentes'),
