@@ -37,7 +37,7 @@ export const TextHeaderDashboard = styled.Text`
     font-size: 26px;
     font-weight: 700;
     text-align: left;
-    color: #8c52e5;
+    color: #fff;
 `;
 
 export const CloseButton = styled(RectButton)`
