@@ -56,9 +56,8 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
 
         const params = {
             inicio: `${currentMonth!.year}-${currentMonth!.month}-01`,
-            fim: `${currentMonth!.year}-${currentMonth!.month}-${
-                currentMonth!.lastDay
-            }`,
+            fim: `${currentMonth!.year}-${currentMonth!.month}-${currentMonth!.lastDay
+                }`,
             login: user!.login,
         };
 
@@ -95,13 +94,13 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
         getApiInfo();
     }, [dispatch]);
 
-    // let debitBalance;
-    // let debitTransactions;
-    // let debitTransactionsSum;
-    // let income;
-    // let outcome;
-    // let incomeSum;
-    // let outcomeSum;
+    let debitBalance;
+    let debitTransactions;
+    let debitTransactionsSum;
+    let income;
+    let outcome;
+    let incomeSum;
+    let outcomeSum;
 
     if (!loading) {
         debitBalance = debitAccount!.saldo;
@@ -254,6 +253,8 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
                                                 key={tr.id}
                                                 valor={tr.valor}
                                                 data={tr.data}
+                                                descricao={tr.descricao}
+                                                tipo={tr.tipo}
                                             />
                                         ))
                                     ) : (

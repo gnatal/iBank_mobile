@@ -1,5 +1,5 @@
 import React from "react";
-import {TextHistoric} from "./styles";
+import { TextHistoric } from "./styles";
 
 interface TextBalanceProps {
     _mTop?: string;
@@ -8,7 +8,7 @@ interface TextBalanceProps {
 const TextHistoricBalance: React.FC<TextBalanceProps> = ({
     _mTop,
     children,
-    }) => {
+}) => {
 
     return (
         <TextHistoric _mTop={_mTop}>{children}</TextHistoric>
