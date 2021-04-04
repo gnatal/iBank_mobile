@@ -3,11 +3,11 @@ import styled from 'styled-components/native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 interface ContainerScrollViewProps {
-    _bgColor?: string;
+  _bgColor?: string;
 }
 
 export const ContainerScrollView = styled(ScrollView)<ContainerScrollViewProps>`
-    width: ${Dimensions.get('window').width}px;
-    height: ${Dimensions.get('window').height}px;
-    background-color: ${(props) => props._bgColor || '#50c878'};
+  width: ${Dimensions.get('window').width}px;
+  height: ${Dimensions.get('window').height}px;
+  background-color: ${(props) => props._bgColor || '#c4c5c7'};
 `;
