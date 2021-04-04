@@ -38,6 +38,8 @@ const DrawerInfoUser: React.FC<DrawerProps> = (props) => {
             '@loginApp',
             '@userNameApp',
             '@cpfApp',
+            '@user',
+            '@pass'
         ]);
         dispatch(logOutUser());
     }
