@@ -139,7 +139,7 @@ export default function Plans() {
                   <Button
                     onPress={handleAddPlan}
                     title="ADICIONAR"
-                    color="#50c878"
+                    color="#83EEA7"
                     accessibilityLabel="add plan green button"
                   />
                 </S.ModalView>
