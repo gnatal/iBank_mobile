@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal } from 'react-native';
+import { Modal, Button } from 'react-native';
 import { useDispatch, useSelector } from "react-redux";
 import Toast from 'react-native-tiny-toast';
 
@@ -15,11 +15,9 @@ import { ItemValue } from '@react-native-picker/picker/typings/Picker';
 import api from '../../services/api';
 import { transactionTypesSuccess } from '../../store/modules/accounts/actions';
 import { IPlanoConta } from '../../store/modules/accounts/types';
-import ButtonPrimary from '../../components/ButtonPrimary';
 
 export default function Plans() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [selectedType, setSelectedType] = useState<ItemValue>('');
   const [description, setDescription] = useState('');
   
@@ -34,13 +32,11 @@ export default function Plans() {
   }
 
   const handleAddPlan = async () => {
-
     if ( !selectedType || description.length === 0 ) {
       return Toast.show('Preencha todos os campos!', {
         containerStyle: { borderRadius: 20, padding: 12, backgroundColor: 'red' }
       });
     }
-    setLoading(true);
     if (transactionTypes) {
       if (user?.login) {
         const data = {
@@ -63,7 +59,6 @@ export default function Plans() {
           Authorization: user?.token,
         }})
         .then( response => {
-          setLoading(false);
           if ( response.status === 200 ) {
             dispatch(transactionTypesSuccess(newPlans));
             Toast.showSuccess('Plano adicionado com sucesso!')
@@ -72,7 +67,6 @@ export default function Plans() {
             setSelectedType('');
             setDescription('');
           } else {
-            setLoading(false);
             Toast.show('Ocorreu algum erro!', {
               containerStyle: { borderRadius: 20, padding: 12, backgroundColor: 'red' }
             });
@@ -142,19 +136,12 @@ export default function Plans() {
                     onChangeText={(value) => handleDescriptionChange(value)}
                   />
 
-                  <ButtonPrimary
-                    title="Realizar depósito"
-                    iconName="arrow-right"
-                    iconColor="#fff"
-                    iconSize={25}
+                  <Button
                     onPress={handleAddPlan}
-                    marginTop="20px"
-                    bgColor="#50c878"
-                    color="#fff"
+                    title="ADICIONAR"
+                    color="#50c878"
                     accessibilityLabel="add plan green button"
-                    _loading={loading}
                   />
-                
                 </S.ModalView>
               </S.ModalContainer>
             </Modal>

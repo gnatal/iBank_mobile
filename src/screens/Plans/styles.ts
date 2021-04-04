@@ -26,13 +26,11 @@ export const ModalContainer = styled.View`
   justify-content: center;
   align-items: center;
 `;
-
 export const ViewClose = styled.TouchableOpacity`
   position: absolute;
   top: 15px;
   right: 15px;
 `;
-
 export const ModalView = styled.View`
   position: relative;
   margin: 20px;
