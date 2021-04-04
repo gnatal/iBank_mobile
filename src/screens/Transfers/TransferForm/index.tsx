@@ -17,8 +17,6 @@ import getValidationErrors from '../../../utils/getValidationErrors';
 import { createFloat } from '../../../utils/helpers';
 import * as S from '../styles';
 
-
-
 interface ITransferForm {
     descricao: string;
     valor: number;
@@ -26,96 +24,95 @@ interface ITransferForm {
 }
 
 export function TransferForm() {
+  const [date, setDate] = useState('');
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [missingDate, setMissingDate] = useState(false);
+  const [loading, setLoading] = useState(false);
+  
+  const formRef = useRef<FormHandles>(null);
+  const descInputRef = useRef<TextInput>(null);
+  const valueInputRef = useRef<TextInput>(null);
+  
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
 
-    const navigation = useNavigation();
+  const { debitAccount, transactionTypes } = useSelector(
+    (state: IRootState) => state.accounts
+  );
 
-    const formRef = useRef<FormHandles>(null);
-    const descInputRef = useRef<TextInput>(null);
-    const valueInputRef = useRef<TextInput>(null);
+  const { user } = useSelector((state: IRootState) => state.user);
 
-    const dispatch = useDispatch();
-    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-    const [date, setDate] = useState('');
-    const [missingDate, setMissingDate] = useState(false);
-    const [loading, setLoading] = useState(false);
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
 
-    const { debitAccount, transactionTypes } = useSelector(
-        (state: IRootState) => state.accounts
-    );
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
 
-    const { user } = useSelector((state: IRootState) => state.user);
+  const handleConfirm = (chosenDate: Date) => {
+    setDate(chosenDate.toISOString().substring(0, 10));
+    setMissingDate(false);
+    hideDatePicker();
+  };
 
-    const showDatePicker = () => {
-        setDatePickerVisibility(true);
-    };
+  const navDashboard = () => {
+    setLoading(false);
+    navigation.navigate('Home');
+  };
 
-    const hideDatePicker = () => {
-        setDatePickerVisibility(false);
-    };
+  const submitFormButton = () => {
+    formRef.current?.submitForm();
+  };
 
-    const handleConfirm = (chosenDate: Date) => {
-        setDate(chosenDate.toISOString().substring(0, 10));
-        setMissingDate(false);
-        hideDatePicker();
-    };
+  async function handleSubmit({
+    descricao,
+    valor,
+    destinatario,
+  }: ITransferForm) {
+    try {
+      valor = valor && createFloat(valor);
+      formRef.current?.setErrors({});
 
-    const navDashboard = () => {
-        setLoading(false);
-        navigation.navigate('Home');
-    };
+      const schema = Yup.object({
+        destinatario: Yup.string()
+          .required('Campo obrigatório')
+          .trim()
+          .min(2, 'Mínimo de 2 caracteres')
+          .max(10, 'Máximo de 10 caracteres'),
+        descricao: Yup.string()
+          .required('Campo obrigatório')
+          .trim()
+          .min(2, 'Mínimo de 2 caracteres')
+          .max(10, 'Máximo de 10 caracteres'),
+        valor: Yup.number()
+          .max(9999.99, 'Valor máximo de R$ 9.999,99')
+          .required('Campo obrigatório'),
+      });
 
-    const submitFormButton = () => {
-        formRef.current?.submitForm();
-    };
+      await schema.validate(
+        { descricao, valor, destinatario },
+        { abortEarly: false }
+      );
 
-    async function handleSubmit({
-        descricao,
-        valor,
-        destinatario,
-    }: ITransferForm) {
-        try {
-            valor = valor && createFloat(valor);
-            formRef.current?.setErrors({});
+      if (!date) {
+        setMissingDate(true);
+        return;
+      }
 
-            const schema = Yup.object({
-                destinatario: Yup.string()
-                    .required('Campo obrigatório')
-                    .trim()
-                    .min(2, 'Mínimo de 2 caracteres')
-                    .max(10, 'Máximo de 10 caracteres'),
-                descricao: Yup.string()
-                    .required('Campo obrigatório')
-                    .trim()
-                    .min(2, 'Mínimo de 2 caracteres')
-                    .max(10, 'Máximo de 10 caracteres'),
-                valor: Yup.number()
-                    .max(9999.99, 'Valor máximo de R$ 9.999,99')
-                    .required('Campo obrigatório'),
-            });
+      setLoading(true);
 
-            await schema.validate(
-                { descricao, valor, destinatario },
-                { abortEarly: false }
-            );
+      const planoConta = transactionTypes!['TU'][0];
 
-            if (!date) {
-                setMissingDate(true);
-                return;
-            }
-
-            setLoading(true);
-
-            const planoConta = transactionTypes!['TU'][0];
-
-            const postData = {
-                conta: debitAccount!.id,
-                contaDestino: destinatario,
-                data: date,
-                descricao,
-                login: user!.login!,
-                valor,
-                planoConta: planoConta.id,
-            };
+      const postData = {
+          conta: debitAccount!.id,
+          contaDestino: destinatario,
+          data: date,
+          descricao,
+          login: user!.login!,
+          valor,
+          planoConta: planoConta.id,
+      };
 
             const headers = { Authorization: user!.token! };
 

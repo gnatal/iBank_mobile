@@ -79,8 +79,8 @@ export default function Login() {
         usuario: login,
         senha: passwd,
       };
-      const passToStore = ['@pass', passwd];
       const userToStore = ['@user', login];
+      const passToStore = ['@pass', passwd];
       api.defaults.headers.Authorization = null;
 
       await api.post(`login`, postData).then(async ({ data }) => {
