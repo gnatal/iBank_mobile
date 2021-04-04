@@ -41,6 +41,9 @@ Link para nosso notion - [clique aqui](https://www.notion.so/81e3ac29968247029a2
 
 Link para nossa documentação - [clique aqui](https://docs.google.com/document/d/1PbObK6qR1NcTQ4brhCIOCplhG2xnZSB4RCopouBae1o/edit?usp=sharing)
 
+
+Link para nossa documentação - [clique aqui](https://snack.expo.io/@guilhermenatal/github.com-gnatal-ibank_mobile)
+
 <h2>
     ##  Como rodar esse projeto. ##
 </h2>
