@@ -1,13 +1,13 @@
-import React, {useRef, useState} from 'react';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import {Form} from '@unform/mobile';
-import {FormHandles} from '@unform/core';
+import React, { useRef, useState } from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { Form } from '@unform/mobile';
+import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
-import {KeyboardAvoidingView, Platform, TextInput} from 'react-native';
+import { KeyboardAvoidingView, Platform, TextInput } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 //
 import ButtonPrimary from '../../components/ButtonPrimary';
-import {LinksBottom} from './styles';
+import { LinksBottom } from './styles';
 import WhiteCardLoginRegister from '../../components/WhiteCardLoginRegister';
 import ContainerScroll from '../../components/ContainerScrollView';
 import ContainerViewLoginRegister from '../../components/ContainerViewLoginRegister';
@@ -17,6 +17,16 @@ import getValidationErrors from '../../utils/getValidationErrors';
 import api from '../../services/api';
 
 //  criar interfaces
+
+interface IResetPasswdForm {
+    passwd: string;
+    confirmPasswd: string;
+}
+
+interface IParams {
+    login: string;
+    senhaTemporaria: string;
+}
 
 export default function RedefinePassword() {
     const [loading, setLoading] = useState(false);
@@ -34,7 +44,7 @@ export default function RedefinePassword() {
         formRef.current?.submitForm();
     };
 
-    async function resetPasswd({passwd, confirmPasswd}: IResetPasswdForm) {
+    async function resetPasswd({ passwd, confirmPasswd }: IResetPasswdForm) {
         try {
             // Start by cleaning errors
             formRef.current?.setErrors({});
@@ -49,8 +59,8 @@ export default function RedefinePassword() {
             });
 
             await schema.validate(
-                {passwd, confirmPasswd},
-                {abortEarly: false}
+                { passwd, confirmPasswd },
+                { abortEarly: false }
             );
 
             setLoading(true);
@@ -61,7 +71,7 @@ export default function RedefinePassword() {
             };
 
             await api.post(`altera-senha`, postData, {
-                params: {senhaTemporaria: params.senhaTemporaria},
+                params: { senhaTemporaria: params.senhaTemporaria },
             });
 
             navLogin();
@@ -77,16 +87,16 @@ export default function RedefinePassword() {
     }
 
     return (
-        <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'center',}}
-                              behavior={Platform.OS === "ios" ? "padding" : "height"} enabled
-                              keyboardVerticalOffset={10}>
+        <KeyboardAvoidingView style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', }}
+            behavior={Platform.OS === "ios" ? "padding" : "height"} enabled
+            keyboardVerticalOffset={10}>
             <ContainerScroll>
-                <ContainerLogoGama mTop="50px" mBottom="20px"/>
+                <ContainerLogoGama mTop="50px" mBottom="20px" />
                 <ContainerViewLoginRegister>
                     <WhiteCardLoginRegister title="Redefinir senha">
                         <Form
                             ref={formRef}
-                            style={{width: '100%'}}
+                            style={{ width: '100%' }}
                             onSubmit={resetPasswd}
                         >
                             <Input

@@ -9,7 +9,7 @@ interface InterfaceContainerCard {
 
 export const ContainerCard = styled.View<InterfaceContainerCard>`
     width: ${Dimensions.get('window').width - 60}px;
-    background: #ffffff;
+    background: #fff;
     border-radius: 10px;
     justify-content: center;
     align-items: center;

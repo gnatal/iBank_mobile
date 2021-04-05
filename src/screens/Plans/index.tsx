@@ -20,19 +20,19 @@ export default function Plans() {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedType, setSelectedType] = useState<ItemValue>('');
   const [description, setDescription] = useState('');
-  
+
   const { user } = useSelector((state: IRootState) => state.user);
   const { transactionTypes } = useSelector((state: IRootState) => state.accounts);
   const dispatch = useDispatch();
 
   const transactionTypesKeys = transactionTypes && Object.keys(transactionTypes);
-  
+
   const handleOpenAddPlan = () => {
     setModalVisible(true);
   }
 
   const handleAddPlan = async () => {
-    if ( !selectedType || description.length === 0 ) {
+    if (!selectedType || description.length === 0) {
       return Toast.show('Preencha todos os campos!', {
         containerStyle: { borderRadius: 20, padding: 12, backgroundColor: 'red' }
       });
@@ -54,29 +54,30 @@ export default function Plans() {
             newPlans.push(plan);
           })
         })
-        await api.post('lancamentos/planos-conta', data, { 
+        await api.post('lancamentos/planos-conta', data, {
           headers: {
-          Authorization: user?.token,
-        }})
-        .then( response => {
-          if ( response.status === 200 ) {
-            dispatch(transactionTypesSuccess(newPlans));
-            Toast.showSuccess('Plano adicionado com sucesso!')
-            
-            setModalVisible(false);
-            setSelectedType('');
-            setDescription('');
-          } else {
-            Toast.show('Ocorreu algum erro!', {
-              containerStyle: { borderRadius: 20, padding: 12, backgroundColor: 'red' }
-            });
+            Authorization: user?.token,
           }
-        });
+        })
+          .then(response => {
+            if (response.status === 200) {
+              dispatch(transactionTypesSuccess(newPlans));
+              Toast.showSuccess('Plano adicionado com sucesso!')
+
+              setModalVisible(false);
+              setSelectedType('');
+              setDescription('');
+            } else {
+              Toast.show('Ocorreu algum erro!', {
+                containerStyle: { borderRadius: 20, padding: 12, backgroundColor: 'red' }
+              });
+            }
+          });
       }
     }
   }
 
-  const handleTypeChange = (e: ItemValue, index:number) => {
+  const handleTypeChange = (e: ItemValue, index: number) => {
     setSelectedType(e)
   }
   const handleDescriptionChange = (text: string) => {
@@ -93,71 +94,71 @@ export default function Plans() {
           </S.HeaderCard>
 
           <S.ViewAdd onPress={handleOpenAddPlan}>
-            <Ionicons 
+            <Ionicons
               name={'add'}
               size={48}
             />
           </S.ViewAdd>
-          
-            <Modal
-              animationType="fade"
-              transparent={true}
-              visible={modalVisible}
-              onRequestClose={() => {setModalVisible(true)}}
-            >
-              <S.ModalContainer>
-                  
-                <S.ModalView> 
-                  <S.ViewClose onPress={() => {setModalVisible(false)}}>
-                    <Ionicons 
-                      name={'close-outline'}
-                      size={36}
-                      
-                    />
-                  </S.ViewClose>
 
-                  <S.ModalTitle>Adicionar um plano</S.ModalTitle>
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => { setModalVisible(true) }}
+          >
+            <S.ModalContainer>
 
-                  <Picker
-                    selectedValue={selectedType}
-                    onValueChange={handleTypeChange}
-                    style={{ width: '100%', color: 'gray'}}
-                  >
-                    <Picker.Item label="Escolha o tipo" value="" />
-                    <Picker.Item label="Receita" value="R" />
-                    <Picker.Item label="Despesa" value="D" />
-                    <Picker.Item label="Transferência entre contas" value="TC" />
-                    <Picker.Item label="Transferência entre usúarios" value="TU" />
-                  </Picker>
+              <S.ModalView>
+                <S.ViewClose onPress={() => { setModalVisible(false) }}>
+                  <Ionicons
+                    name={'close-outline'}
+                    size={36}
 
-                  <S.ModalInput
-                    placeholder="Descrição"
-                    value={description}
-                    onChangeText={(value) => handleDescriptionChange(value)}
                   />
+                </S.ViewClose>
 
-                  <Button
-                    onPress={handleAddPlan}
-                    title="ADICIONAR"
-                    color="#83EEA7"
-                    accessibilityLabel="add plan green button"
-                  />
-                </S.ModalView>
-              </S.ModalContainer>
-            </Modal>
+                <S.ModalTitle>Adicionar um plano</S.ModalTitle>
+
+                <Picker
+                  selectedValue={selectedType}
+                  onValueChange={handleTypeChange}
+                  style={{ width: '100%', color: 'gray' }}
+                >
+                  <Picker.Item label="Escolha o tipo" value="" />
+                  <Picker.Item label="Receita" value="R" />
+                  <Picker.Item label="Despesa" value="D" />
+                  <Picker.Item label="Transferência entre contas" value="TC" />
+                  <Picker.Item label="Transferência entre usúarios" value="TU" />
+                </Picker>
+
+                <S.ModalInput
+                  placeholder="Descrição"
+                  value={description}
+                  onChangeText={(value) => handleDescriptionChange(value)}
+                />
+
+                <Button
+                  onPress={handleAddPlan}
+                  title="ADICIONAR"
+                  color="#83EEA7"
+                  accessibilityLabel="add plan green button"
+                />
+              </S.ModalView>
+            </S.ModalContainer>
+          </Modal>
 
           {transactionTypesKeys?.map((key) =>
-            transactionTypes![key].map((plan) => 
-            <S.ViewPlans key={plan.id}>
-              <S.TextViewPlans>
-                {plan.descricao}
-              </S.TextViewPlans>
-              
-              <S.LettersViewPlans>
-                {plan.tipoMovimento}
-              </S.LettersViewPlans>
-            </S.ViewPlans>
-           ))}
+            transactionTypes![key].map((plan) =>
+              <S.ViewPlans key={plan.id}>
+                <S.TextViewPlans>
+                  {plan.descricao}
+                </S.TextViewPlans>
+
+                <S.LettersViewPlans>
+                  {plan.tipoMovimento}
+                </S.LettersViewPlans>
+              </S.ViewPlans>
+            ))}
         </WhiteCardDashboard>
       </ContainerViewDashboard>
     </ContainerScroll>

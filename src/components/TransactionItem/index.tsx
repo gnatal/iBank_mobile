@@ -8,13 +8,14 @@ import FormattedBRL from '../FormattedBRL';
 interface TransactionItemProps {
     valor: number;
     data: string;
+    descricao: string;
+    tipo: string;
 }
 
-const TransactionItem: React.FC<TransactionItemProps> = ({ valor, data }) => {
+const TransactionItem: React.FC<TransactionItemProps> = ({ valor, data, descricao, tipo }) => {
     const formattedDate = formatDate(data);
     return (
         <S.RowLastHistoric>
-            <S.LineRowSeparatorHistoric>|</S.LineRowSeparatorHistoric>
             <TextBalance
                 _Color={valor < 0 ? '#F45F5F' : undefined}
                 _mTop="10px"
@@ -22,6 +23,11 @@ const TransactionItem: React.FC<TransactionItemProps> = ({ valor, data }) => {
                 <FormattedBRL value={valor} />
             </TextBalance>
             <S.TextDataHistoric>{formattedDate}</S.TextDataHistoric>
+            <S.MetaBox>
+
+                <S.TextDataHistoric> {descricao}</S.TextDataHistoric>
+                <S.TextDataHistoric> {tipo}</S.TextDataHistoric>
+            </S.MetaBox>
         </S.RowLastHistoric>
     );
 };

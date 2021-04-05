@@ -3,7 +3,7 @@ import { Dimensions } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 
 interface TextHeaderProps {
-    _mTop?: string
+    _mTop?: string;
 }
 
 export const HeaderDashboard = styled.View`
@@ -67,9 +67,9 @@ export const TextHeaderCard = styled.Text<TextHeaderProps>`
     font-size: 18px;
     font-weight: 700;
     text-align: left;
-    color: #9b9b9b;
+    color: #50c878;
     padding-left: 10px;
-    margin-top: ${(props) => props._mTop || "0px"};
+    margin-top: ${(props) => props._mTop || '0px'};
 `;
 
 export const ContentCard = styled.View`

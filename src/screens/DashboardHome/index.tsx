@@ -1,29 +1,31 @@
-import React, { useEffect } from 'react';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { useDispatch, useSelector } from 'react-redux';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-//
-import * as S from './styles';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import ContainerViewDashboard from '../../components/ContainerDashboard';
+import ContainerScroll from '../../components/ContainerScrollView';
+import FormattedBRL from '../../components/FormattedBRL';
+import HidableValue from '../../components/HidableValue';
+import MoneyLoader from '../../components/MoneyLoader';
+import TextBalance from '../../components/TextBalance';
+import TextHistoricBalance from '../../components/TextHistoricBalance';
+import TransactionItem from '../../components/TransactionItem';
+import WhiteCardDashboard from '../../components/WhiteCardDashboard';
 import { DrawerParamList } from '../../navigation/drawer';
-import { getDateInfo } from '../../utils/helpers';
 import api from '../../services/api';
 import { IRootState } from '../../store';
-import { logOutUser } from '../../store/modules/user/actions';
 import {
     accountDataSuccess,
     toggleTransactionVisibility,
-    transactionTypesSuccess,
+    transactionTypesSuccess
 } from '../../store/modules/accounts/actions';
-import ContainerScroll from '../../components/ContainerScrollView';
-import ContainerViewDashboard from '../../components/ContainerDashboard';
-import WhiteCardDashboard from '../../components/WhiteCardDashboard';
-import TextBalance from '../../components/TextBalance';
-import TextHistoricBalance from '../../components/TextHistoricBalance';
-import MoneyLoader from '../../components/MoneyLoader';
-import TransactionItem from '../../components/TransactionItem';
-import HidableValue from '../../components/HidableValue';
-import FormattedBRL from '../../components/FormattedBRL';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { logOutUser } from '../../store/modules/user/actions';
+import { getDateInfo } from '../../utils/helpers';
+import BalanceCard from './BalanceCard';
+import PlansCard from './PlansCard';
+//
+import * as S from './styles';
 
 type DashboardHomeNavigationProp = DrawerNavigationProp<
     DrawerParamList,
@@ -56,9 +58,8 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
 
         const params = {
             inicio: `${currentMonth!.year}-${currentMonth!.month}-01`,
-            fim: `${currentMonth!.year}-${currentMonth!.month}-${
-                currentMonth!.lastDay
-            }`,
+            fim: `${currentMonth!.year}-${currentMonth!.month}-${currentMonth!.lastDay
+                }`,
             login: user!.login,
         };
 
@@ -95,13 +96,13 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
         getApiInfo();
     }, [dispatch]);
 
-    // let debitBalance;
-    // let debitTransactions;
-    // let debitTransactionsSum;
-    // let income;
-    // let outcome;
-    // let incomeSum;
-    // let outcomeSum;
+    let debitBalance;
+    let debitTransactions;
+    let debitTransactionsSum;
+    let income;
+    let outcome;
+    let incomeSum;
+    let outcomeSum;
 
     if (!loading) {
         debitBalance = debitAccount!.saldo;
@@ -120,7 +121,7 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
     const toggleHideInfo = () => dispatch(toggleTransactionVisibility());
 
     return (
-        <ContainerScroll>
+        <ContainerScroll  _bgColor="#c4c5c7">
             <ContainerViewDashboard>
                 <S.HeaderDashboard>
                     <S.TextHeaderDashboard>
@@ -131,7 +132,7 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
                             <Ionicons
                                 name="ios-eye-outline"
                                 size={33}
-                                color="#FFFFFF"
+                                color="#fbfbfb"
                             />
                         </S.IconEye>
                         <S.IconHeaderDashboard
@@ -140,7 +141,7 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
                             <Ionicons
                                 name="md-person-outline"
                                 size={33}
-                                color="#FFFFFF"
+                                color="#fbfbfb"
                             />
                         </S.IconHeaderDashboard>
                     </S.ContainerIcon>
@@ -150,85 +151,18 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
                     <MoneyLoader />
                 ) : (
                     <>
-                        <WhiteCardDashboard
-                            _MarginBottom="30px"
-                            _Padding="20px"
-                        >
-                            <S.HeaderCard>
-                                <MaterialCommunityIcons
-                                    name="currency-usd-circle-outline"
-                                    size={30}
-                                    color="#9b9b9b"
-                                />
-                                <S.TextHeaderCard>
-                                    Saldo da conta
-                                </S.TextHeaderCard>
-                            </S.HeaderCard>
-                            <S.ContentCard>
-                                <TextBalance>
-                                    <HidableValue
-                                        condition={hideInfo}
-                                        value={
-                                            <FormattedBRL
-                                                value={debitBalance}
-                                            />
-                                        }
-                                    />
-                                </TextBalance>
-                                <TextHistoricBalance>
-                                    {!hideInfo && (
-                                        <>
-                                            Lançamentos no mês:{' '}
-                                            <FormattedBRL
-                                                value={debitTransactionsSum}
-                                            />
-                                        </>
-                                    )}
-                                </TextHistoricBalance>
-                            </S.ContentCard>
-                        </WhiteCardDashboard>
-                        <WhiteCardDashboard
-                            _MarginBottom="30px"
-                            _Padding="20px"
-                        >
-                            <S.HeaderCard>
-                                <MaterialCommunityIcons
-                                    name="currency-usd-circle-outline"
-                                    size={30}
-                                    color="#9b9b9b"
-                                />
-                                <S.TextHeaderCard>
-                                    Planos de conta
-                                </S.TextHeaderCard>
-                            </S.HeaderCard>
-                            <HidableValue
-                                condition={hideInfo}
-                                value={
-                                    <>
-                                        <S.PlanAccountContentCard>
-                                            <TextHistoricBalance>
-                                                Tipo do plano: Entradas
-                                            </TextHistoricBalance>
-                                            <TextBalance>
-                                                <FormattedBRL
-                                                    value={incomeSum}
-                                                />
-                                            </TextBalance>
-                                        </S.PlanAccountContentCard>
-                                        <S.PlanAccountCard>
-                                            <S.TextExpense>
-                                                Tipo do plano: Saídas
-                                            </S.TextExpense>
-                                            <TextBalance _Color="#F45F5F">
-                                                <FormattedBRL
-                                                    value={outcomeSum}
-                                                />
-                                            </TextBalance>
-                                        </S.PlanAccountCard>
-                                    </>
-                                }
-                            />
-                        </WhiteCardDashboard>
+                        <BalanceCard
+                            hideInfo={hideInfo}
+                            debitBalance={debitBalance}
+                            debitTransactionsSum={debitTransactionsSum}
+                        />
+                        <PlansCard
+
+                            hideInfo={hideInfo}
+                            incomeSum={incomeSum}
+                            outcomeSum={outcomeSum}
+
+                        />
                         <WhiteCardDashboard
                             _MarginBottom="150px"
                             _Padding="20px 20px 60px"
@@ -237,7 +171,7 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
                                 <MaterialCommunityIcons
                                     name="currency-usd-circle-outline"
                                     size={30}
-                                    color="#9b9b9b"
+                                    color="#50c878"
                                 />
                                 <S.TextHeaderCard>
                                     Últimos Lançamentos
@@ -254,6 +188,8 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
                                                 key={tr.id}
                                                 valor={tr.valor}
                                                 data={tr.data}
+                                                descricao={tr.descricao}
+                                                tipo={tr.tipo}
                                             />
                                         ))
                                     ) : (

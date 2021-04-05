@@ -49,7 +49,7 @@ export default function ConfirmAccountCreate() {
                         style={{ width: "80%" }}
                         marginTop="20px"
                         marginBottom="30px"
-                        bgColor="#63dc3f"
+                        bgColor="#50c878"
                         color="#fff"
                         onPress={navLogin}
                         _width="60%"

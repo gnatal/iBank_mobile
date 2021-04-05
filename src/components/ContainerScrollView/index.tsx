@@ -8,7 +8,7 @@ interface ScrollViewProps {
 
 const ContainerScroll: React.FC<ScrollViewProps> = ({ children, _bgColor }) => {
     return (
-        <SafeAreaView style={{ backgroundColor: "#50c878" }}>
+        <SafeAreaView style={{ backgroundColor: "#c4c5c7" }}>
             <ContainerScrollView _bgColor={_bgColor}>
                 {children}
             </ContainerScrollView>

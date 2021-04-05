@@ -44,7 +44,7 @@ export default function DashboardTabNavigator() {
                 style: {
                     borderTopWidth: 0,
                     position: 'absolute',
-                    backgroundColor: '#68DE5A',
+                    backgroundColor: '#50c878',
                     borderTopColor: 'transparent',
                     height: isIos ? 110 : 90,
                     justifyContent: 'center',
